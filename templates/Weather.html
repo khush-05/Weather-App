@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2f;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            width: 100%;
+            background-color: #222;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #00aaff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            background-color: #2c2c3e;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 1000px;
+            margin-top: 20px;
+        }
+        .left-panel, .right-panel {
+            padding: 30px;
+        }
+        .left-panel {
+            background-color: #3a3a4f;
+            text-align: center;
+            width: 300px;
+            border-right: 1px solid #2c2c3e;
+        }
+        .left-panel .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .left-panel .search-bar input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px 0 0 5px;
+            border-right: none;
+            background-color: #2c2c3e;
+            color: #fff;
+        }
+        .left-panel .search-bar button {
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 0 5px 5px 0;
+            background-color: #555;
+            cursor: pointer;
+            color: #fff;
+        }
+        .left-panel .search-bar button:hover {
+            background-color: #00aaff;
+        }
+        .left-panel .weather-icon {
+            margin-bottom: 10px;
+        }
+        .left-panel .temperature {
+            font-size: 50px;
+            margin: 0;
+            color: #fff;
+        }
+        .left-panel .condition {
+            font-size: 20px;
+            margin: 5px 0;
+            color: #fff;
+        }
+        .left-panel .date-time {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #aaa;
+        }
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 500px;
+        }
+        .right-panel .info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .right-panel .info div {
+            background-color: #3a3a4f;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 30%;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: transform 0.3s;
+        }
+        .right-panel .info div:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.5);
+        }
+        .right-panel .info div h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #ccc;
+        }
+        .forecast-section {
+            display: flex;
+            flex-direction: column;
+            width: 1000px;
+            margin-top: 20px;
+        }
+        .forecast-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #00aaff;
+        }
+        .forecast-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .forecast-day {
+            background-color: #3a3a4f;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 18%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: transform 0.3s;
+        }
+        .forecast-day:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 170, 255, 0.5);
+        }
+        .forecast-day h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #ccc;
+        }
+        .forecast-day img {
+            margin-bottom: 10px;
+        }
+        .forecast-day .temp {
+            font-size: 20px;
+            color: #fff;
+        }
+        .forecast-day .condition {
+            font-size: 14px;
+            color: #aaa;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="header">Weather Update </div>
+    <div class="container">
+        <div class="left-panel">
+            <form class="search-bar" method="GET">
+                <input type="text" name="city" placeholder="Enter city" value="{{ Curr_weather.city }}">
+                <button type="submit"><i class="ri-search-line"></i></button>
+            </form>
+            <div class="weather-icon">
+                <img src="http://openweathermap.org/img/wn/{{ Curr_weather.icon }}@2x.png" alt="Weather Icon">
+            </div>
+            <div class="temperature">{{ Curr_weather.temprature }}°C</div>
+            <div class="condition">{{ Curr_weather.weather }}</div>
+            <div class="date-time">
+                {{ Curr_weather.date }}<br>
+                {{ Curr_weather.day }}, {{ Curr_weather.time }}<br>
+                {{ Curr_weather.city }}
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="info">
+                <div>
+                    <h3>Humidity</h3>
+                    {{ Curr_weather.humidity }}%
+                </div>
+                <div>
+                    <h3>Pressure</h3>
+                    {{ Curr_weather.pressure }} mb
+                </div>
+                <div>
+                    <h3>Temperature</h3>
+                    {{ Curr_weather.temprature }}°C
+                </div>
+                <div>
+                    <h3>Weather</h3>
+                    {{ Curr_weather.weather }}
+                </div>
+                <div>
+                    <h3>Feels Like</h3>
+                    {{ Curr_weather.feelslike }}°C
+                </div>
+                <div>
+                    <h3>Min Temperature</h3>
+                    {{ Curr_weather.mintemp }}°C
+                </div>
+                <div>
+                    <h3>Max Temperature</h3>
+                    {{ Curr_weather.maxtemp }}°C
+                </div>
+                <div>
+                    <h3>Sunrise</h3>
+                    {{ Curr_weather.sunrise }}
+                </div>
+                <div>
+                    <h3>Sunset</h3>
+                    {{ Curr_weather.sunset }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="forecast-section">
+        <div class="forecast-title">5-Day Forecast</div>
+        <div class="forecast-container">
+            <div class="forecast-day">
+                <h3>{{ forecast.0.Day }}</h3>
+                <div>{{ forecast.0.date }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ forecast.0.icon }}@2x.png" alt="Weather Icon">
+                <div class="temp">{{ forecast.0.temperature }}°C</div>
+                <div class="condition">{{ forecast.0.weather }}</div>
+                <div>Pressure: {{ forecast.0.pressure }} mb</div>
+                <div>Humidity: {{ forecast.0.humidity }}%</div>
+            </div>
+            <div class="forecast-day">
+                <h3>{{ forecast.1.Day }}</h3>
+                <div>{{ forecast.1.date }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ forecast.1.icon }}@2x.png" alt="Weather Icon">
+                <div class="temp">{{ forecast.1.temperature }}°C</div>
+                <div class="condition">{{ forecast.1.weather }}</div>
+                <div>Pressure: {{ forecast.1.pressure }} mb</div>
+                <div>Humidity: {{ forecast.1.humidity }}%</div>
+            </div>
+            <div class="forecast-day">
+                <h3>{{ forecast.2.Day }}</h3>
+                <div>{{ forecast.2.date }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ forecast.2.icon }}@2x.png" alt="Weather Icon">
+                <div class="temp">{{ forecast.2.temperature }}°C</div>
+                <div class="condition">{{ forecast.2.weather }}</div>
+                <div>Pressure: {{ forecast.2.pressure }} mb</div>
+                <div>Humidity: {{ forecast.2.humidity }}%</div>
+            </div>
+            <div class="forecast-day">
+                <h3>{{ forecast.3.Day }}</h3>
+                <div>{{ forecast.3.date }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ forecast.3.icon }}@2x.png" alt="Weather Icon">
+                <div class="temp">{{ forecast.3.temperature }}°C</div>
+                <div class="condition">{{ forecast.3.weather }}</div>
+                <div>Pressure: {{ forecast.3.pressure }} mb</div>
+                <div>Humidity: {{ forecast.3.humidity }}%</div>
+            </div>
+            <div class="forecast-day">
+                <h3>{{ forecast.4.Day }}</h3>
+                <div>{{ forecast.4.date }}</div>
+                <img src="http://openweathermap.org/img/wn/{{ forecast.4.icon }}@2x.png" alt="Weather Icon">
+                <div class="temp">{{ forecast.4.temperature }}°C</div>
+                <div class="condition">{{ forecast.4.weather }}</div>
+                <div>Pressure: {{ forecast.4.pressure }} mb</div>
+                <div>Humidity: {{ forecast.4.humidity }}%</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
